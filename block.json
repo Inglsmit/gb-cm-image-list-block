@@ -3,10 +3,33 @@
 	"name": "cm-block/cm-image-list",
 	"title": "CM image list block",
 	"category": "widgets",
-	"icon": "gallery",
+	"icon": "dashicons-format-gallery",
 	"description": "Block with images.",
 	"supports": {
 		"html": false
+	},
+	"attributes": {
+		"gallery": {
+			"type": "array",
+			"source": "query",
+			"selector": ".wp-block-cm-block-cm-image-list img",
+			"query": {
+				"id": {
+					"type": "number"
+				},
+				"alt": {
+					"type": "string",
+					"source": "attribute",
+					"attribute": "alt",
+					"default": ""
+				},
+				"url": {
+					"type": "string",
+					"source": "attribute",
+					"attribute": "src"
+				}
+			}
+		}
 	},
 	"textdomain": "cm-image-list",
 	"editorScript": "file:./build/index.js",
