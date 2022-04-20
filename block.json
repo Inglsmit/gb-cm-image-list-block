@@ -3,7 +3,7 @@
 	"name": "cm-block/cm-image-list",
 	"title": "CM image list block",
 	"category": "widgets",
-	"icon": "smiley",
+	"icon": "gallery",
 	"description": "Block with images.",
 	"supports": {
 		"html": false

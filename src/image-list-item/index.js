@@ -5,7 +5,7 @@ import Save from './save';
 
 registerBlockType('cm-block/image-list-item', {
 	title: __('Image', 'cm-image-list'),
-	description: __('A team member item', 'cm-image-list'),
+	description: __('Image item', 'cm-image-list'),
 	icon: 'image',
 	parent: ['cm-block/cm-image-list'],
 	supports: {
@@ -23,7 +23,7 @@ registerBlockType('cm-block/image-list-item', {
 			attribute: 'alt',
 			default: '',
 		},
-		imgUrl: {
+		imgURL: {
 			type: 'string',
 			source: 'attribute',
 			selector: 'img',
