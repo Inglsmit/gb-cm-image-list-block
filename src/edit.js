@@ -9,6 +9,7 @@ import {
 } from '@wordpress/block-editor';
 import { Spinner, PanelBody, ToolbarButton } from '@wordpress/components';
 import { isBlobURL } from '@wordpress/blob';
+import "./editor.scss";
 
 export default function Edit({ attributes, setAttributes }) {
 	const { gallery, imgURL } = attributes;

@@ -1,10 +1,6 @@
-/**
- * The following styles get applied inside the editor only.
- *
- * Replace them with your own styles or remove the file completely.
- */
-
-.wp-block-cm-block-cm-image-list {
-	padding: 20px;
-	border: 1px dotted #f03;
+.editor-styles-wrapper{
+	.wp-block-cm-block-cm-image-list {
+		padding: 40px;
+		border: 1px dotted #f03;
+	}
 }
