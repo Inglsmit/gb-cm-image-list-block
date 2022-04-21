@@ -1,4 +1,5 @@
 import { __ } from '@wordpress/i18n';
+import Flickity from 'react-flickity-component';
 import {
 	useBlockProps,
 	InspectorControls,
@@ -55,6 +56,10 @@ export default function Edit({ attributes, setAttributes }) {
 		});
 	};
 
+	// const flickityOptions = {
+	// 	initialIndex: 2
+	// }
+
 	return (
 		<>
 			<InspectorControls>
@@ -87,14 +92,17 @@ export default function Edit({ attributes, setAttributes }) {
 				</BlockControls>
 			)}
 			<div {...useBlockProps()}>
-				{gallery &&
-					!gallery.lenght &&
-					gallery.map((el) => (
-						<>
-							<img src={el.url} alt={el.alt} />
-							{isBlobURL(el.url) && <Spinner />}
-						</>
-					))}
+				<Flickity>
+					{gallery &&
+						!gallery.lenght &&
+						gallery.map((el) => (
+							<>
+								<img src={el.url} alt={el.alt} />
+								{isBlobURL(el.url) && <Spinner />}
+							</>
+						))}
+				</Flickity>
+
 				<MediaPlaceholder
 					icon="image"
 					onSelect={onSelectImage}
