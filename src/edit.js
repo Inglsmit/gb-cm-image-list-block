@@ -8,13 +8,14 @@ import {
 	// MediaReplaceFlow,
 	MediaUpload,
 	MediaUploadCheck,
+	
 } from '@wordpress/block-editor';
-import { Spinner, PanelBody, ToolbarButton, Button } from '@wordpress/components';
+import { Spinner, PanelBody, ToolbarButton, Button, ToggleControl } from '@wordpress/components';
 import { isBlobURL } from '@wordpress/blob';
 import "./editor.scss";
 
 export default function Edit({ attributes, setAttributes }) {
-	const { gallery } = attributes;
+	const { gallery, isShowAsList } = attributes;
 	const ids = gallery && gallery.map( el => el.id);
 	const ids4Mp = [];
 	if (gallery) gallery.forEach( el => ids4Mp.push({id: el.id}) );
@@ -50,15 +51,19 @@ export default function Edit({ attributes, setAttributes }) {
 	return (
 		<>
 			<InspectorControls>
-				<PanelBody title={__('Image Settings', 'cm-image-list')}>
-					{/* { id && (
-						<SelectControl
-							label={ __( 'Image Size', 'cm-image-list' ) }
-							options={ getImageSizeOptions() }
-							value={ url }
-							onChange={ onChangeImageSize }
-						/>
-					) } */}
+				<PanelBody title={__('Image List Settings', 'cm-image-list')}>
+					<ToggleControl
+						label="Show all images"
+						help={
+							isShowAsList
+								? 'Is show all images.'
+								: 'Is show as carousel.'
+						}
+						onChange={ ( bool ) => {
+							setAttributes( { isShowAsList: bool } )
+						} }
+						checked={ isShowAsList }
+					/>
 				</PanelBody>
 			</InspectorControls>
 			{gallery &&
@@ -76,25 +81,28 @@ export default function Edit({ attributes, setAttributes }) {
 							gallery
 						/>
 					</MediaUploadCheck>
-					{/* <MediaReplaceFlow
-						name={__('Replace Image', 'cm-image-list')}
-						onSelect={onSelectImage}
-						// onSelectURL={onSelectURL}
-						// onError={ onUploadError }
-						accept="image/*"
-						allowedTypes={['image']}
-						mediaIds={ ['1691', '1687', '1686'] }
-						multiple={true}
-						// mediaURL={imgURL}
-						gallery={true}
-					/> */}
 					<ToolbarButton onClick={removeGallery}>
 						{__('Remove Gallery', 'cm-image-list')}
 					</ToolbarButton>
 				</BlockControls>
 			)}
-			<div {...useBlockProps()}>
-				<Flickity>
+			<div {...useBlockProps()} >
+				{/* TODO: HOW to optimize the code?  */}
+				{ isShowAsList && (
+					<>
+						{gallery &&
+							!gallery.lenght &&
+							gallery.map((el) => (
+								<>
+									<img src={el.url} alt={el.alt} />
+									{isBlobURL(el.url) && <Spinner />}
+								</>
+							))}
+					</>
+				) }
+
+				{ !isShowAsList && (
+					<Flickity>
 					{gallery &&
 						!gallery.lenght &&
 						gallery.map((el) => (
@@ -103,7 +111,8 @@ export default function Edit({ attributes, setAttributes }) {
 								{isBlobURL(el.url) && <Spinner />}
 							</>
 						))}
-				</Flickity>
+					</Flickity>					
+				) }
 
 				<MediaPlaceholder
 					icon="image"

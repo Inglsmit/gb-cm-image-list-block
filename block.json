@@ -32,6 +32,10 @@
 					"attribute": "src"
 				}
 			}
+		},
+		"isShowAsList": {
+			"type": "boolean",
+			"default": false
 		}
 	},
 	"textdomain": "cm-image-list",
