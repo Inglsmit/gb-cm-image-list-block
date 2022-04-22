@@ -5,61 +5,47 @@ import {
 	InspectorControls,
 	MediaPlaceholder,
 	BlockControls,
-	MediaReplaceFlow,
+	// MediaReplaceFlow,
+	MediaUpload,
+	MediaUploadCheck,
 } from '@wordpress/block-editor';
-import { Spinner, PanelBody, ToolbarButton } from '@wordpress/components';
+import { Spinner, PanelBody, ToolbarButton, Button } from '@wordpress/components';
 import { isBlobURL } from '@wordpress/blob';
 import "./editor.scss";
 
 export default function Edit({ attributes, setAttributes }) {
-	const { gallery, imgURL } = attributes;
-	// console.log(gallery);
-
+	const { gallery } = attributes;
+	const ids = gallery && gallery.map( el => el.id);
+	const ids4Mp = [];
+	if (gallery) gallery.forEach( el => ids4Mp.push({id: el.id}) );
+	
 	const onSelectImage = (media) => {
-		// console.log(media);
-
 		// if ( ! media || ! media.url ) {
 		// 	setAttributes( { imgURL: undefined, imgID: undefined, imgAlt: '' } );
 		// 	return;
 		// }
 
 		const images = [];
-		media.map((el) =>
+		media.forEach( el => {
 			images.push({
 				id: el.id,
 				url: el.url,
 				alt: el.alt,
-			})
-		);
-
-		// console.log('images');
-		// console.log(gallery);
-
-		setAttributes({
-			gallery: images,
+			});
 		});
-		// setAttributes( { imgURL: image.url, imgID: image.id, imgAlt: image.alt } );
-	};
 
-	const onSelectURL = (newURL) => {
 		setAttributes({
-			imgURL: newURL,
-			imgID: undefined,
-			imgAlt: '',
+			gallery: images
 		});
 	};
 
-	const removeImage = () => {
+	const removeGallery = () => {
 		setAttributes({
 			imgURL: undefined,
 			imgAlt: '',
 			imgID: undefined,
 		});
 	};
-
-	// const flickityOptions = {
-	// 	initialIndex: 2
-	// }
 
 	return (
 		<>
@@ -75,20 +61,35 @@ export default function Edit({ attributes, setAttributes }) {
 					) } */}
 				</PanelBody>
 			</InspectorControls>
-			{imgURL && (
+			{gallery &&
+				!gallery.lenght && (
 				<BlockControls group="inline">
-					<MediaReplaceFlow
+					<MediaUploadCheck>
+						<MediaUpload
+							onSelect={onSelectImage}
+							allowedTypes={['image']}
+							value={ ids }
+							render={ ( { open } ) => (
+								<Button onClick={ open }>{__('Edit Gallery', 'cm-image-list')}</Button>
+							) }
+							multiple
+							gallery
+						/>
+					</MediaUploadCheck>
+					{/* <MediaReplaceFlow
 						name={__('Replace Image', 'cm-image-list')}
 						onSelect={onSelectImage}
-						onSelectURL={onSelectURL}
+						// onSelectURL={onSelectURL}
 						// onError={ onUploadError }
 						accept="image/*"
 						allowedTypes={['image']}
-						// mediaId={ imgID }
-						mediaURL={imgURL}
-					/>
-					<ToolbarButton onClick={removeImage}>
-						{__('Remove Image', 'cm-image-list')}
+						mediaIds={ ['1691', '1687', '1686'] }
+						multiple={true}
+						// mediaURL={imgURL}
+						gallery={true}
+					/> */}
+					<ToolbarButton onClick={removeGallery}>
+						{__('Remove Gallery', 'cm-image-list')}
 					</ToolbarButton>
 				</BlockControls>
 			)}
@@ -107,11 +108,14 @@ export default function Edit({ attributes, setAttributes }) {
 				<MediaPlaceholder
 					icon="image"
 					onSelect={onSelectImage}
-					onSelectURL={onSelectURL}
+					// onSelectURL={onSelectURL}
 					// onError={ onUploadError }
 					accept="image/*"
 					allowedTypes={['image']}
 					// disableMediaButtons={ imgURL }
+					// value={ [{id: 770}, {id: '768'}, {id: 807}, {id: 769}] }
+					value={ ids4Mp }
+					gallery
 					multiple
 					// notices={ noticeUI }
 				/>

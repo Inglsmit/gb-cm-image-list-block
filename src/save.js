@@ -11,7 +11,7 @@ export default function Save({ attributes }) {
 				!gallery.lenght &&
 				gallery.map((el) => (
 					<>
-						<img src={el.url} alt={el.alt} />
+						<img data-id={el.id} src={el.url} alt={el.alt} />
 					</>
 				))}
 		</div>

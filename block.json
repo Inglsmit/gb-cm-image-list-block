@@ -3,7 +3,7 @@
 	"name": "cm-block/cm-image-list",
 	"title": "CM image list block",
 	"category": "widgets",
-	"icon": "dashicons-format-gallery",
+	"icon": "format-gallery",
 	"description": "Block with images.",
 	"supports": {
 		"html": false
@@ -15,7 +15,10 @@
 			"selector": ".wp-block-cm-block-cm-image-list img",
 			"query": {
 				"id": {
-					"type": "number"
+					"type": "number",
+					"source": "attribute",
+					"attribute": "data-id",
+					"default": ""
 				},
 				"alt": {
 					"type": "string",
