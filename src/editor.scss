@@ -1,6 +1,11 @@
-.editor-styles-wrapper{
-	.wp-block-cm-block-cm-image-list {
-		padding: 40px;
-		border: 1px dotted #f03;
+
+.wp-block-cm-block-cm-image-list {
+
+	&__carousel {
+
+		ol.flickity-page-dots {
+			margin: 0;
+			z-index: 10;
+		}
 	}
 }

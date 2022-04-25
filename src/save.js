@@ -6,14 +6,28 @@ export default function Save({ attributes }) {
 	const { gallery } = attributes;
 
 	return (
-		<div {...useBlockProps.save()}>
-			{gallery &&
-				!gallery.lenght &&
-				gallery.map((el) => (
-					<>
-						<img data-id={el.id} src={el.url} alt={el.alt} />
-					</>
-				))}
+		<div
+			{...useBlockProps.save({
+				className: ` alignfull`,
+			})}
+		>
+			<div className="wp-block-cm-block-cm-image-list__container">
+				<div className="wp-block-cm-block-cm-image-list__carousel">
+					{gallery &&
+						!gallery.lenght &&
+						gallery.map((el) => (
+							<>
+								<div className={'carousel-cell'}>
+									<img
+										data-id={el.id}
+										src={el.url}
+										alt={el.alt}
+									/>
+								</div>
+							</>
+						))}
+				</div>
+			</div>
 		</div>
 	);
 }
