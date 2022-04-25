@@ -15,11 +15,12 @@ import {
 	ToolbarButton,
 	Button,
 	ToggleControl,
+	withNotices,
 } from '@wordpress/components';
 import { isBlobURL } from '@wordpress/blob';
 import './editor.scss';
 
-export default function Edit({ attributes, setAttributes }) {
+function Edit({ attributes, setAttributes, noticeOperations, noticeUI }) {
 	const { gallery, isShowAsList } = attributes;
 	const ids = gallery && gallery.length > 0 && gallery.map((el) => el.id);
 	const ids4Mp = [];
@@ -27,10 +28,10 @@ export default function Edit({ attributes, setAttributes }) {
 		gallery.forEach((el) => ids4Mp.push({ id: el.id }));
 
 	const onSelectImage = (media) => {
-		// if ( ! media || ! media.url ) {
-		// 	setAttributes( { imgURL: undefined, imgID: undefined, imgAlt: '' } );
-		// 	return;
-		// }
+		if ( !media ) {
+			setAttributes({ gallery: [] });
+			return;
+		}
 
 		const images = [];
 		media.forEach((el) => {
@@ -51,6 +52,11 @@ export default function Edit({ attributes, setAttributes }) {
 		draggable: true,
 		contain: true,
 		wrapAround: true,
+	};
+
+	const onUploadError = (message) => {
+		noticeOperations.removeAllNotices();
+		noticeOperations.createErrorNotice(message);
 	};
 
 	return (
@@ -145,7 +151,7 @@ export default function Edit({ attributes, setAttributes }) {
 						icon="image"
 						onSelect={onSelectImage}
 						// onSelectURL={onSelectURL}
-						// onError={ onUploadError }
+						onError={onUploadError}
 						accept="image/*"
 						allowedTypes={['image']}
 						// disableMediaButtons={ imgURL }
@@ -153,10 +159,12 @@ export default function Edit({ attributes, setAttributes }) {
 						value={ids4Mp}
 						gallery
 						multiple
-						// notices={ noticeUI }
+						notices={noticeUI}
 					/>
 				</div>
 			</div>
 		</>
 	);
 }
+
+export default withNotices(Edit);
