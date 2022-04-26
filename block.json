@@ -5,6 +5,7 @@
 	"category": "widgets",
 	"icon": "format-gallery",
 	"description": "Block with images.",
+	"keywords": ["gallery","images","carousel"],
 	"supports": {
 		"html": false
 	},

@@ -21,6 +21,6 @@ jQuery('.wp-block-cm-block-cm-image-list__carousel').flickity({
 	wrapAround: true,
 	autoPlay: 1900,
 	pauseAutoPlayOnHover: true,
-}); 
+});
 
 // do something here ...

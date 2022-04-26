@@ -2,8 +2,10 @@
 
 
 .wp-block-cm-block-cm-image-list {
-	&:not(.alignwide):not(.alignfull):not(.alignleft):not(.alignright):not(.wp-block-separator):not(.woocommerce){
-		.entry-content &{
+
+	&:not(.alignwide):not(.alignfull):not(.alignleft):not(.alignright):not(.wp-block-separator):not(.woocommerce) {
+
+		.entry-content & {
 			max-width: 1074px;
 			margin: 0 auto;
 			margin-bottom: 40px;

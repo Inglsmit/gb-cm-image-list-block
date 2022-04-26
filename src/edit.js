@@ -18,6 +18,7 @@ import {
 	withNotices,
 } from '@wordpress/components';
 import { isBlobURL } from '@wordpress/blob';
+// import { keyboardReturn } from '@wordpress/icons';
 import './editor.scss';
 
 function Edit({ attributes, setAttributes, noticeOperations, noticeUI }) {
@@ -28,7 +29,7 @@ function Edit({ attributes, setAttributes, noticeOperations, noticeUI }) {
 	// 	gallery.forEach((el) => ids4Mp.push({ id: el.id }));
 
 	const onSelectImage = (media) => {
-		if ( !media ) {
+		if (!media) {
 			setAttributes({ gallery: [] });
 			return;
 		}
@@ -62,22 +63,24 @@ function Edit({ attributes, setAttributes, noticeOperations, noticeUI }) {
 	return (
 		<>
 			<InspectorControls>
-			{gallery && gallery.length > 0 && (
-				<PanelBody title={__('Image List Settings', 'cm-image-list')}>
-					<ToggleControl
-						label="Show all images"
-						help={
-							isShowAsList
-								? 'Is show all images.'
-								: 'Is show as carousel.'
-						}
-						onChange={(bool) => {
-							setAttributes({ isShowAsList: bool });
-						}}
-						checked={isShowAsList}
-					/>
-				</PanelBody>
-			)}
+				{gallery && gallery.length > 0 && (
+					<PanelBody
+						title={__('Image List Settings', 'cm-image-list')}
+					>
+						<ToggleControl
+							label="Show all images"
+							help={
+								isShowAsList
+									? 'Is show all images.'
+									: 'Is show as carousel.'
+							}
+							onChange={(bool) => {
+								setAttributes({ isShowAsList: bool });
+							}}
+							checked={isShowAsList}
+						/>
+					</PanelBody>
+				)}
 			</InspectorControls>
 			{gallery && gallery.length > 0 && (
 				<BlockControls group="inline">
@@ -114,7 +117,11 @@ function Edit({ attributes, setAttributes, noticeOperations, noticeUI }) {
 							gallery.length > 0 &&
 							gallery.map((el) => (
 								<>
-									<img src={el.url} alt={el.alt} />
+									<img
+										className="wp-block-cm-block-cm-image-list__img"
+										src={el.url}
+										alt={el.alt}
+									/>
 									{isBlobURL(el.url) && <Spinner />}
 								</>
 							))}
@@ -134,12 +141,11 @@ function Edit({ attributes, setAttributes, noticeOperations, noticeUI }) {
 									<>
 										<div className={'carousel-cell'}>
 											<img
+												className="wp-block-cm-block-cm-image-list__img"
 												src={el.url}
 												alt={el.alt}
 											/>
-											{isBlobURL(el.url) && (
-												<Spinner />
-											)}
+											{isBlobURL(el.url) && <Spinner />}
 										</div>
 									</>
 								))}
@@ -148,14 +154,21 @@ function Edit({ attributes, setAttributes, noticeOperations, noticeUI }) {
 					</>
 				)}
 
-				{ ( !gallery || ( gallery && (gallery.length === undefined || gallery.length === 0 ))) && (
+				{(!gallery ||
+					(gallery &&
+						(gallery.length === undefined ||
+							gallery.length === 0))) && (
 					<MediaPlaceholder
-						icon="image"
+						icon={'format-gallery'}
 						onSelect={onSelectImage}
 						// onSelectURL={onSelectURL}
 						onError={onUploadError}
 						accept="image/*"
 						allowedTypes={['image']}
+						labels={{
+							title: ' Gallery',
+							instructions: 'Choose your images.',
+						}}
 						// disableMediaButtons={ imgURL }
 						// value={ [{id: 770}, {id: '768'}, {id: 807}, {id: 769}] }
 						// value={ids4Mp}

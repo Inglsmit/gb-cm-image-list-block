@@ -1,15 +1,23 @@
 
 .wp-block-cm-block-cm-image-list {
-	&.block-editor-block-list__block.wp-block{
+
+	&.block-editor-block-list__block.wp-block {
 		max-width: 1074px;
 		margin: 0 auto;
 		margin-bottom: 40px;
 	}
 
 	&__carousel {
+		margin-bottom: 80px;
+
 		ol.flickity-page-dots {
 			margin: 0;
 			z-index: 10;
+			padding-left: 0;
 		}
+	}
+
+	.dashicon.dashicons.dashicons-format-gallery{
+		margin-right: 12px;
 	}
 }
