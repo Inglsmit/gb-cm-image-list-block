@@ -62,6 +62,7 @@ function Edit({ attributes, setAttributes, noticeOperations, noticeUI }) {
 	return (
 		<>
 			<InspectorControls>
+			{gallery && gallery.length > 0 && (
 				<PanelBody title={__('Image List Settings', 'cm-image-list')}>
 					<ToggleControl
 						label="Show all images"
@@ -76,6 +77,7 @@ function Edit({ attributes, setAttributes, noticeOperations, noticeUI }) {
 						checked={isShowAsList}
 					/>
 				</PanelBody>
+			)}
 			</InspectorControls>
 			{gallery && gallery.length > 0 && (
 				<BlockControls group="inline">
