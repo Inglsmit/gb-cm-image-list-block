@@ -23,9 +23,9 @@ import './editor.scss';
 function Edit({ attributes, setAttributes, noticeOperations, noticeUI }) {
 	const { gallery, isShowAsList } = attributes;
 	const ids = gallery && gallery.length > 0 && gallery.map((el) => el.id);
-	const ids4Mp = [];
-	if (gallery && gallery.length > 0)
-		gallery.forEach((el) => ids4Mp.push({ id: el.id }));
+	// const ids4Mp = [];
+	// if (gallery && gallery.length > 0)
+	// 	gallery.forEach((el) => ids4Mp.push({ id: el.id }));
 
 	const onSelectImage = (media) => {
 		if ( !media ) {
@@ -156,7 +156,7 @@ function Edit({ attributes, setAttributes, noticeOperations, noticeUI }) {
 						allowedTypes={['image']}
 						// disableMediaButtons={ imgURL }
 						// value={ [{id: 770}, {id: '768'}, {id: 807}, {id: 769}] }
-						value={ids4Mp}
+						// value={ids4Mp}
 						gallery
 						multiple
 						notices={noticeUI}
