@@ -23,7 +23,10 @@ import './editor.scss';
 
 function Edit({ attributes, setAttributes, noticeOperations, noticeUI }) {
 	const { gallery, isShowAsList } = attributes;
+	console.log(gallery);
 	const ids = gallery && gallery.length > 0 && gallery.map((el) => el.id);
+	console.log(ids);
+
 	// const ids4Mp = [];
 	// if (gallery && gallery.length > 0)
 	// 	gallery.forEach((el) => ids4Mp.push({ id: el.id }));

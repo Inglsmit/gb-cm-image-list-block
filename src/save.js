@@ -16,6 +16,7 @@ export default function Save({ attributes }) {
 							<div className={'carousel-cell'}>
 								<img
 									className='wp-block-cm-block-cm-image-list__img'
+									data-id={el.id}
 									src={el.url}
 									alt={el.alt}
 								/>
