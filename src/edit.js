@@ -104,64 +104,62 @@ function Edit({ attributes, setAttributes, noticeOperations, noticeUI }) {
 					</ToolbarButton>
 				</BlockControls>
 			)}
-			<div {...useBlockProps()} data-align="full">
-				<div className="wp-block-cm-block-cm-image-list__container">
-					{/* TODO: HOW to optimize the code?  */}
-					{isShowAsList && (
-						<>
-							{gallery &&
-								gallery.length > 0 &&
-								gallery.map((el) => (
+			<div {...useBlockProps()}>
+				{/* TODO: HOW to optimize the code?  */}
+				{isShowAsList && (
+					<>
+						{gallery &&
+							gallery.length > 0 &&
+							gallery.map((el) => (
+								<>
+									<img src={el.url} alt={el.alt} />
+									{isBlobURL(el.url) && <Spinner />}
+								</>
+							))}
+					</>
+				)}
+
+				{!isShowAsList && (
+					<>
+						{gallery && gallery.length > 0 && (
+							<Flickity
+								className={
+									'wp-block-cm-block-cm-image-list__carousel'
+								}
+								options={flickityOptions}
+							>
+								{gallery.map((el) => (
 									<>
-										<img src={el.url} alt={el.alt} />
-										{isBlobURL(el.url) && <Spinner />}
+										<div className={'carousel-cell'}>
+											<img
+												src={el.url}
+												alt={el.alt}
+											/>
+											{isBlobURL(el.url) && (
+												<Spinner />
+											)}
+										</div>
 									</>
 								))}
-						</>
-					)}
+							</Flickity>
+						)}
+					</>
+				)}
 
-					{!isShowAsList && (
-						<>
-							{gallery && gallery.length > 0 && (
-								<Flickity
-									className={
-										'wp-block-cm-block-cm-image-list__carousel'
-									}
-									options={flickityOptions}
-								>
-									{gallery.map((el) => (
-										<>
-											<div className={'carousel-cell'}>
-												<img
-													src={el.url}
-													alt={el.alt}
-												/>
-												{isBlobURL(el.url) && (
-													<Spinner />
-												)}
-											</div>
-										</>
-									))}
-								</Flickity>
-							)}
-						</>
-					)}
-
-					<MediaPlaceholder
-						icon="image"
-						onSelect={onSelectImage}
-						// onSelectURL={onSelectURL}
-						onError={onUploadError}
-						accept="image/*"
-						allowedTypes={['image']}
-						// disableMediaButtons={ imgURL }
-						// value={ [{id: 770}, {id: '768'}, {id: 807}, {id: 769}] }
-						value={ids4Mp}
-						gallery
-						multiple
-						notices={noticeUI}
-					/>
-				</div>
+				<MediaPlaceholder
+					icon="image"
+					onSelect={onSelectImage}
+					// onSelectURL={onSelectURL}
+					onError={onUploadError}
+					accept="image/*"
+					allowedTypes={['image']}
+					// disableMediaButtons={ imgURL }
+					// value={ [{id: 770}, {id: '768'}, {id: 807}, {id: 769}] }
+					value={ids4Mp}
+					gallery
+					multiple
+					notices={noticeUI}
+				/>
 			</div>
 		</>
 	);
