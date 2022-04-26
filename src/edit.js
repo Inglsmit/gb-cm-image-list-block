@@ -146,20 +146,22 @@ function Edit({ attributes, setAttributes, noticeOperations, noticeUI }) {
 					</>
 				)}
 
-				<MediaPlaceholder
-					icon="image"
-					onSelect={onSelectImage}
-					// onSelectURL={onSelectURL}
-					onError={onUploadError}
-					accept="image/*"
-					allowedTypes={['image']}
-					// disableMediaButtons={ imgURL }
-					// value={ [{id: 770}, {id: '768'}, {id: 807}, {id: 769}] }
-					value={ids4Mp}
-					gallery
-					multiple
-					notices={noticeUI}
-				/>
+				{ ( !gallery || ( gallery && (gallery.length === undefined || gallery.length === 0 ))) && (
+					<MediaPlaceholder
+						icon="image"
+						onSelect={onSelectImage}
+						// onSelectURL={onSelectURL}
+						onError={onUploadError}
+						accept="image/*"
+						allowedTypes={['image']}
+						// disableMediaButtons={ imgURL }
+						// value={ [{id: 770}, {id: '768'}, {id: 807}, {id: 769}] }
+						value={ids4Mp}
+						gallery
+						multiple
+						notices={noticeUI}
+					/>
+				)}
 			</div>
 		</>
 	);

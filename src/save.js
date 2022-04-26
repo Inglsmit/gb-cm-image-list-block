@@ -9,21 +9,21 @@ export default function Save({ attributes }) {
 		<div
 			{...useBlockProps.save()}
 		>
-			<div className="wp-block-cm-block-cm-image-list__carousel">
-				{gallery &&
-					!gallery.lenght &&
-					gallery.map((el) => (
+			{gallery && gallery.length > 0 && (
+				<div className="wp-block-cm-block-cm-image-list__carousel">
+					{gallery.map((el) => (
 						<>
 							<div className={'carousel-cell'}>
 								<img
-									data-id={el.id}
 									src={el.url}
 									alt={el.alt}
 								/>
 							</div>
 						</>
 					))}
-			</div>
+				</div>
+			)}
+
 		</div>
 	);
 }
