@@ -22,8 +22,8 @@ import { isBlobURL } from '@wordpress/blob';
 import './editor.scss';
 
 function Edit({ attributes, setAttributes, noticeOperations, noticeUI }) {
-	const { gallery, isShowAsList } = attributes;
-	const ids = gallery && gallery.length > 0 && gallery.map((el) => el.id);
+	const { gallery, isShowAsList, ids } = attributes;
+	// const ids = gallery && gallery.length > 0 && gallery.map((el) => el.id);
 
 	// const ids4Mp = [];
 	// if (gallery && gallery.length > 0)
@@ -31,22 +31,28 @@ function Edit({ attributes, setAttributes, noticeOperations, noticeUI }) {
 
 	const onSelectImage = (media) => {
 		if (!media) {
-			setAttributes({ gallery: [] });
+			setAttributes({ gallery: [], ids: [] });
 			return;
 		}
 
-		const images = [];
-		media.forEach((el) => {
-			images.push({
-				id: el.id,
-				url: el.url,
-				alt: el.alt,
-			});
-		});
+		// const images = [];
+		// media.forEach((el) => {
+		// 	images.push({
+		// 		id: el.id,
+		// 		url: el.url,
+		// 		alt: el.alt,
+		// 	});
+		// });
 
-		setAttributes({
-			gallery: images,
-		});
+		// setAttributes({
+		// 	gallery: images,
+		// });
+
+		setAttributes( {
+			gallery: media.map( ( image ) => ( { id: image.id, url: image.url, alt: image.alt } ) ),
+			ids: media.map( ( image ) => image.id ),
+		} );
+
 	};
 
 	const flickityOptions = {
@@ -61,6 +67,13 @@ function Edit({ attributes, setAttributes, noticeOperations, noticeUI }) {
 		noticeOperations.createErrorNotice(message);
 	};
 
+	const removeGallery = () => {
+		setAttributes( {
+			ids: [],
+			gallery: [],
+		} );
+	};
+
 	return (
 		<>
 			<InspectorControls>
@@ -69,11 +82,11 @@ function Edit({ attributes, setAttributes, noticeOperations, noticeUI }) {
 						title={__('Image List Settings', 'cm-image-list')}
 					>
 						<ToggleControl
-							label="Show all images"
+							label={__("Show all images", 'cm-image-list')}
 							help={
 								isShowAsList
-									? 'Is show all images.'
-									: 'Is show as carousel.'
+									? __('Is show all images.', 'cm-image-list')
+									: __('Is show as carousel.', 'cm-image-list')
 							}
 							onChange={(bool) => {
 								setAttributes({ isShowAsList: bool });
@@ -100,11 +113,7 @@ function Edit({ attributes, setAttributes, noticeOperations, noticeUI }) {
 						/>
 					</MediaUploadCheck>
 					<ToolbarButton
-						onClick={() => {
-							setAttributes({
-								gallery: [],
-							});
-						}}
+						onClick={removeGallery}
 					>
 						{__('Remove Gallery', 'cm-image-list')}
 					</ToolbarButton>
@@ -112,53 +121,52 @@ function Edit({ attributes, setAttributes, noticeOperations, noticeUI }) {
 			)}
 			<div {...useBlockProps()}>
 				{/* TODO: HOW to optimize the code?  */}
-				{isShowAsList && (
+				{gallery && gallery.length > 0 ? (
 					<>
-						{gallery &&
-							gallery.length > 0 &&
-							gallery.map((el) => (
-								<>
-									<img
-										className="wp-block-cm-block-cm-image-list__img"
-										src={el.url}
-										alt={el.alt}
-									/>
-									{isBlobURL(el.url) && <Spinner />}
-								</>
-							))}
-					</>
-				)}
-
-				{!isShowAsList && (
-					<>
-						{gallery && gallery.length > 0 && (
-							<Flickity
-								className={
-									'wp-block-cm-block-cm-image-list__carousel'
-								}
-								options={flickityOptions}
-							>
-								{gallery.map((el) => (
-									<>
-										<div className={'carousel-cell'}>
+						{isShowAsList && (
+							<>
+								{gallery &&
+									gallery.length > 0 &&
+									gallery.map((el) => (
+										<>
 											<img
 												className="wp-block-cm-block-cm-image-list__img"
 												src={el.url}
 												alt={el.alt}
 											/>
 											{isBlobURL(el.url) && <Spinner />}
-										</div>
-									</>
-								))}
-							</Flickity>
+										</>
+									))}
+							</>
+						)}
+
+						{!isShowAsList && (
+							<>
+								{gallery && gallery.length > 0 && (
+									<Flickity
+										className={
+											'wp-block-cm-block-cm-image-list__carousel'
+										}
+										options={flickityOptions}
+									>
+										{gallery.map((el, index) => (
+											<>
+												<div key={ index } className={'wp-block-cm-block-cm-image-list__carousel-cell'}>
+													<img
+														className={ el.id ? `wp-image-${ el.id }` : null }
+														src={el.url}
+														alt={el.alt}
+													/>
+													{isBlobURL(el.url) && <Spinner />}
+												</div>
+											</>
+										))}
+									</Flickity>
+								)}
+							</>
 						)}
 					</>
-				)}
-
-				{(!gallery ||
-					(gallery &&
-						(gallery.length === undefined ||
-							gallery.length === 0))) && (
+				):(
 					<MediaPlaceholder
 						icon={'format-gallery'}
 						onSelect={onSelectImage}
@@ -167,8 +175,8 @@ function Edit({ attributes, setAttributes, noticeOperations, noticeUI }) {
 						accept="image/*"
 						allowedTypes={['image']}
 						labels={{
-							title: ' Gallery',
-							instructions: 'Choose your images.',
+							title: __(' Gallery', 'cm-image-list'),
+							instructions: __('Choose your images.', 'cm-image-list'),
 						}}
 						// disableMediaButtons={ imgURL }
 						// value={ [{id: 770}, {id: '768'}, {id: 807}, {id: 769}] }
@@ -178,6 +186,7 @@ function Edit({ attributes, setAttributes, noticeOperations, noticeUI }) {
 						notices={noticeUI}
 					/>
 				)}
+
 			</div>
 		</>
 	);

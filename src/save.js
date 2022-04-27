@@ -13,9 +13,9 @@ export default function Save({ attributes }) {
 				<div className="wp-block-cm-block-cm-image-list__carousel">
 					{gallery.map((el) => (
 						<>
-							<div className={'carousel-cell'}>
+							<div className={'wp-block-cm-block-cm-image-list__carousel-cell'}>
 								<img
-									className='wp-block-cm-block-cm-image-list__img'
+									className={ el.id ? `wp-image-${ el.id }` : null }
 									data-id={el.id}
 									src={el.url}
 									alt={el.alt}
