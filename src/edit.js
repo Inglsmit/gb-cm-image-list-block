@@ -130,7 +130,7 @@ function Edit({ attributes, setAttributes, noticeOperations, noticeUI }) {
 									gallery.map((el) => (
 										<>
 											<img
-												className="wp-block-cm-block-cm-image-list__img"
+												className={ el.id ? `wp-image-${ el.id }` : null }
 												src={el.url}
 												alt={el.alt}
 											/>
